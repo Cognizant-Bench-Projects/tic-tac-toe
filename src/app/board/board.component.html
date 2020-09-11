@@ -19,6 +19,10 @@
   </div>
 </div>
 
+<div id="msgModal" [ngClass]="showMsgModal ? 'modal' : 'hideModal'">
+	<h1>{{gameState.currentPlayer ? "Player 1" : gameState.isPVP ? "Player 2" : "Computer"}} Go First</h1>
+</div>
+
 <ng-template #msgModal let-modal>
   <div class="modal-header custom-modal">
     <h1 class="modal-title">{{!winner ? "Draw" : winner === 1 ? "Player 1 Win" : gameState.isPVP ? "Player 2 Win" : "Computer Win"}}!</h1>

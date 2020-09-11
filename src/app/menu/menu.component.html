@@ -11,7 +11,7 @@
       <tr>
         <th>Player(O)</th>
         <th>Tie</th>
-        <th>{{gameState.isPVP? "Player(X)" : "Computer(X)"}}</th>
+        <th>{{gameState.isPVP ? "Player(X)" : "Computer(X)"}}</th>
       </tr>
       <tr>
         <td>{{gameState.score.player1}}</td>
@@ -23,7 +23,7 @@
     <br>
     <button class="btn btn-info" (click) = "gameState.restart()">Restart Game</button>
     <br/>
-    <button class="btn btn-info"  (click) = "reset()">Reset Score</button>
+    <button class="btn btn-info"  (click) = "reset()">Reset Game</button>
     <br/>
     <button class="btn btn-secondary" (click)="backToMenu()">Back To Menu</button>
   </div>

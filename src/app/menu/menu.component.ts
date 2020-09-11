@@ -16,6 +16,7 @@ export class MenuComponent implements OnInit {
   startGame(player: boolean) {
     this.gameState.isPVP = player;
     this.gameState.gameStarted = true;
+    this.gameState.showStartMsg();
   }
 
   reset() {
@@ -24,11 +25,12 @@ export class MenuComponent implements OnInit {
       tie: 0,
       player2: 0
     };
+    this.gameState.clean();
+    this.gameState.showStartMsg();
   }
  
   backToMenu() {
-    this.reset();
-    this.gameState.restart();
     this.gameState.gameStarted = false;
+    this.reset();
   }
 }

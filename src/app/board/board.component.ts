@@ -14,26 +14,32 @@ export class BoardComponent implements OnInit {
   @ViewChild('msgModal', {static: false}) modalContent: TemplateRef<any>;
   boardPattern = [[0, 1, 2], [3, 4, 5], [6, 7, 8]];
   winner: number;
+  showMsgModal: boolean = false;
 
   constructor(private gameState: GameStateService, private gameLogic: GameLogicService, private AIService: AiService, private modal: NgbModal) { }
 
   ngOnInit() {
+    this.gameState.computerGoFirstEmitter().subscribe(() => {
+      this.computerTurn();
+    });
+
+    this.gameState.startMsgEmitter().subscribe(showMsg => {
+      this.showMsgModal = showMsg;
+      setTimeout(() => {
+        this.showMsgModal = false;
+      }, 1000);
+    })
   }
 
   clickOnBoard(idx) {
-    if (this.gameState.boardState[idx] === 0 && !this.gameState.gameOver && (this.gameState.isPVP || (!this.gameState.isPVP && this.gameState.currentPlayer))) {
+    if (this.gameState.boardState[idx] === 0 && !this.gameState.gameOver && !this.showMsgModal && (this.gameState.isPVP || (!this.gameState.isPVP && this.gameState.currentPlayer))) {
       this.gameState.boardState[idx] = this.gameState.currentPlayer ? 1 : 2;
       this.gameState.currentPlayer = !this.gameState.currentPlayer;
       this.gameState.click--;
       this.checkIfWin(idx);
 
       if (!this.gameState.isPVP && !this.gameState.gameOver) {
-        this.gameState.click--;
-        let idx = this.AIService.nextStep(this.gameState.boardState);
-        this.gameState.boardState[idx] = 2;
-        this.gameState.currentPlayer = true;
-
-        this.checkIfWin(idx);
+        this.computerTurn();
       }
     }
   }
@@ -51,12 +57,21 @@ export class BoardComponent implements OnInit {
   gameFinished() {
     this.addScore(this.winner);
     this.gameState.gameOver = true;
-    this.modal.open(this.modalContent, {size: 'lg'});
+    this.modal.open(this.modalContent, {size: 'lg', centered: true});
   }
 
   playAgain() {
     this.gameState.restart();
     this.modal.dismissAll();
+  }
+
+  computerTurn() {
+      this.gameState.click--;
+      let idx = this.AIService.nextStep(this.gameState.boardState);
+      this.gameState.boardState[idx] = 2;
+      this.gameState.currentPlayer = true;
+
+      this.checkIfWin(idx);
   }
 
   checkIfWin(idx: number) {
