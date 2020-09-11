@@ -66,12 +66,12 @@ export class BoardComponent implements OnInit {
   }
 
   computerTurn() {
-      this.gameState.click--;
-      let idx = this.AIService.nextStep(this.gameState.boardState);
-      this.gameState.boardState[idx] = 2;
-      this.gameState.currentPlayer = true;
+    this.gameState.click--;
+    let idx = this.AIService.nextStep(this.gameState.boardState);
+    this.gameState.boardState[idx] = 2;
+    this.gameState.currentPlayer = true;
 
-      this.checkIfWin(idx);
+    this.checkIfWin(idx);
   }
 
   checkIfWin(idx: number) {
