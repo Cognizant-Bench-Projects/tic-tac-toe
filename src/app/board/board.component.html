@@ -1,13 +1,16 @@
 <div id="game-board">
   <div *ngIf="!gameState.gameStarted" id="title">
-    <h1 class="text text-center">Tic Tac Toe</h1>
+    <h1 class="text text-center title">Tic Tac Toe</h1>
     <img src="../../assets/tic-tac-toe.jpg" />
   </div>
   <div *ngIf="gameState.gameStarted">
     <table class="text text-center">
       <tr *ngFor="let row of boardPattern">
-        <td *ngFor="let number of row; let i = index">
-          <div class="cell" (click)="clickOnBoard(number)" [style.color] = "gameState.boardState[number] > 1 ? 'darkblue' : 'darkred'">
+        <td *ngFor="let number of row">
+          <div [id]="number" class="cell" (click)="clickOnBoard(number)"
+            [style.color] = "gameState.boardState[number] > 1 ? 'darkcyan' : 'darkred'"
+            [ngClass]="{'isWinItem': gameState.winnerRow.includes(number)}"
+          >
             {{!gameState.boardState[number] ? "" : gameState.boardState[number] === 1 ? "O" : "X"}}
           </div>
         </td>
@@ -17,8 +20,8 @@
 </div>
 
 <ng-template #msgModal let-modal>
-  <div class="modal-header">
-    <h2 class="modal-title">{{!winner ? "Tie" : winner === 1 ? "Player 1 Win" : gameState.isPVP ? "Player 2 Win" : "Computer Win"}}!</h2>
-    <button class="btn btn-primary" (click)="playAgain()">Play Again</button>
+  <div class="modal-header custom-modal">
+    <h1 class="modal-title">{{!winner ? "Draw" : winner === 1 ? "Player 1 Win" : gameState.isPVP ? "Player 2 Win" : "Computer Win"}}!</h1>
+    <button class="btn btn-info btn-lg" (click)="playAgain()">Play Again</button>
   </div>
 </ng-template>

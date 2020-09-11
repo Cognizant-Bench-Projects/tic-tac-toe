@@ -10,6 +10,7 @@ export class GameStateService {
   currentPlayer: boolean = true;
   click: number = 9;
   gameOver: boolean = false;
+  winnerRow: Array<number> = [];
 
   boardState: Array<number> = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -23,6 +24,7 @@ export class GameStateService {
 
   restart() {
     this.boardState = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    this.winnerRow = [];
     this.click = 9;
     this.currentPlayer = true;
     this.gameOver = false;

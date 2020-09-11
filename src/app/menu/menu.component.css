@@ -20,5 +20,6 @@ table {
 
 th, td {
   font-size: 1.3em;
+  font-weight: 700;
   padding-right: 30px;
 }
