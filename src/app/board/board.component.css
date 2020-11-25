@@ -11,7 +11,7 @@ img {
 }
 
 td {
-  font-size: 6.5em;
+  font-size: 6.3em;
   font-weight: 680;
   border: 10px solid sienna;
   text-shadow: 2px 2px lightgray;
@@ -76,4 +76,8 @@ table tr td:last-child {
   margin: auto;
   display: block;
   width: 80%;
+}
+
+#msgModal {
+  min-height: 100px;
 }
