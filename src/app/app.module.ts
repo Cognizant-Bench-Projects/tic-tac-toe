@@ -7,6 +7,8 @@ import { BoardComponent } from './board/board.component';
 import { MenuComponent } from './menu/menu.component';
 import { AppRoutingModule } from './app-routing.module';
 import { GameStateService } from './services/game-state.service';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,6 +19,9 @@ import { GameStateService } from './services/game-state.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    NgbModule,
+    FormsModule,
+    HttpClientModule,
     NgbModule
   ],
   providers: [

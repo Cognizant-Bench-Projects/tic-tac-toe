@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { User } from '../model/user';
+import { AuthService } from '../services/auth.service';
 import { GameStateService } from '../services/game-state.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-menu',
@@ -8,9 +11,16 @@ import { GameStateService } from '../services/game-state.service';
 })
 export class MenuComponent implements OnInit {
 
-  constructor(private gameState: GameStateService) { }
+  currentUser: User = new User();
+  currentInput: string = '';
+  confirmPassword: string = '';
+
+  constructor(private gameState: GameStateService, private authService: AuthService, private modalService: NgbModal) { }
 
   ngOnInit() {
+    this.authService.closeModalEmitter().subscribe(() => {
+      this.closeModal();
+    })
   }
 
   startGame(player: boolean) {
@@ -32,5 +42,29 @@ export class MenuComponent implements OnInit {
   backToMenu() {
     this.gameState.gameStarted = false;
     this.reset();
+  }
+
+  login() {
+    /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(this.currentInput) ? this.currentUser.email = this.currentInput : this.currentUser.username = this.currentInput;
+    this.authService.login(this.currentUser);
+  }
+
+  signup() {
+    this.authService.signup(this.currentUser);
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  openModal(content) {
+    this.currentUser = new User();
+    this.currentInput = '';
+    this.confirmPassword = '';
+    this.modalService.open(content, { centered: true });
+  }
+
+  closeModal() {
+    this.modalService.dismissAll();
   }
 }

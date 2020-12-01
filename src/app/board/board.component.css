@@ -4,6 +4,7 @@
 
 img {
   height: 50vh;
+  max-width: 50vw;
 }
 
 .title {
@@ -49,9 +50,10 @@ table tr td:last-child {
 }
 
 .isWinItem {
-  text-decoration-line: underline;
+  /* text-decoration-line: underline;
   text-decoration-color: gold;
-  text-decoration-style: solid;
+  text-decoration-style: solid; */
+  color: gold !important;
 }
 
 .modal {
