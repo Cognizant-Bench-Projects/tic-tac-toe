@@ -8,6 +8,10 @@ import { User } from '../model/user';
 export class AuthService {
 
   @Output() closeModal: EventEmitter<any> = new EventEmitter<any>();
+  @Output() loginFailed: EventEmitter<any> = new EventEmitter<any>();
+  @Output() emailNotUnique: EventEmitter<any> = new EventEmitter<any>();
+  @Output() usernameNotUnique: EventEmitter<any> = new EventEmitter<any>();
+
   url: string = 'http://localhost:8080/users';
 
   private user: User = null;
@@ -20,6 +24,8 @@ export class AuthService {
         this.user = data;
         if (this.user) {
           this.closeModal.emit();
+        } else {
+          this.loginFailed.emit();
         }
       }, error => {
         console.error(error);
@@ -35,7 +41,12 @@ export class AuthService {
           this.closeModal.emit();
         }
       }, error => {
-        console.error(error);
+        if (error.error === 'Email already in use') {
+          this.emailNotUnique.emit();
+        }
+        if (error.error === 'Username already in use') {
+          this.usernameNotUnique.emit();
+        }
       }
     )
   }
@@ -46,5 +57,17 @@ export class AuthService {
 
   closeModalEmitter() {
     return this.closeModal;
+  }
+
+  loginFailedEmitter() {
+    return this.loginFailed;
+  }
+
+  emailNotUniqueEmitter() {
+    return this.emailNotUnique;
+  }
+
+  usernameNotUniqueEmitter() {
+    return this.usernameNotUnique;
   }
 }

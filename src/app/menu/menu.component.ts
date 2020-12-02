@@ -15,11 +15,31 @@ export class MenuComponent implements OnInit {
   currentInput: string = '';
   confirmPassword: string = '';
 
+  loginFailed: boolean = false;
+  invalidUsername: boolean = false;
+  usernameNotUnique: boolean = false;
+  invalidEmail: boolean = false;
+  emailNotUnique: boolean = false;
+  invalidPassword: boolean = false;
+  passwordNotMatch: boolean = false;
+
   constructor(private gameState: GameStateService, private authService: AuthService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.authService.closeModalEmitter().subscribe(() => {
       this.closeModal();
+    })
+
+    this.authService.loginFailedEmitter().subscribe(() => {
+      this.loginFailed = true;
+    })
+
+    this.authService.usernameNotUniqueEmitter().subscribe(() => {
+      this.usernameNotUnique = true;
+    })
+
+    this.authService.emailNotUniqueEmitter().subscribe(() => {
+      this.emailNotUnique = true;
     })
   }
 
@@ -44,13 +64,29 @@ export class MenuComponent implements OnInit {
     this.reset();
   }
 
+  validateInput() {
+    this.invalidUsername = this.currentUser.username.length < 5 || this.currentUser.username.length > 10 || this.currentUser.username.includes('@');
+    this.invalidEmail = !/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(this.currentUser.email);
+    this.invalidPassword = this.currentUser.password.length < 8 || this.currentUser.password.length > 16;
+    this.passwordNotMatch = this.confirmPassword !== this.currentUser.password;
+
+    if (this.invalidUsername || this.invalidEmail || this.invalidPassword || this.passwordNotMatch) {
+      return false;
+    }
+    return true;
+  }
+
   login() {
-    /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(this.currentInput) ? this.currentUser.email = this.currentInput : this.currentUser.username = this.currentInput;
+    this.currentInput.includes('@') ? this.currentUser.email = this.currentInput : this.currentUser.username = this.currentInput;
     this.authService.login(this.currentUser);
   }
 
   signup() {
-    this.authService.signup(this.currentUser);
+    if (this.validateInput()) {
+      this.usernameNotUnique = false;
+      this.emailNotUnique = false;
+      this.authService.signup(this.currentUser);
+    }
   }
 
   logout() {
@@ -61,6 +97,13 @@ export class MenuComponent implements OnInit {
     this.currentUser = new User();
     this.currentInput = '';
     this.confirmPassword = '';
+    this.loginFailed = false;
+    this.invalidUsername = false;
+    this.usernameNotUnique = false;
+    this.invalidEmail = false;
+    this.emailNotUnique = false;
+    this.invalidPassword = false;
+    this.passwordNotMatch = false;
     this.modalService.open(content, { centered: true });
   }
 

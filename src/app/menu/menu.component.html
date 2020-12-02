@@ -6,12 +6,12 @@
     <br/>
     <button class="btn btn-info" (click)="openModal(loginModal)">Login</button>
     <br/>
-    <button class="btn btn-info" (click)="login()">GitHub Login</button>
+    <button class="btn btn-info" (click)="login()">Login With GitHub</button>
     <br/>
-    <button class="btn btn-info" (click)="login()">Google Login</button>
+    <button class="btn btn-info" (click)="login()">Login With Google</button>
   </div>
   <div *ngIf="authService.user && !gameState.gameStarted">
-    <h1>Start Game</h1>
+    <h1>Hello {{authService.user.username}}</h1>
     <button class="btn btn-info" (click)="startGame(false)">One Player</button>
     <br/>
     <button class="btn btn-info" (click)="startGame(true)">Two Player</button>
@@ -46,10 +46,11 @@
   </div>
   <div class="modal-body">
     <form #loginForm="ngForm">
-      <input type="text" class="form-control" placeholder="Email/Username" name="email/username" [(ngModel)]="currentInput" autocomplete="off" required minlength="5">
+      <input type="text" class="form-control" placeholder="Email/Username" name="email/username" [(ngModel)]="currentInput" autocomplete="off" required>
       <br/>
       <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="currentUser.password" autocomplete="off" required>
-      <button id="login-btn" type="button" class="btn btn-outline-primary" (click)="login()" [disabled]="loginForm.form.invalid">Login</button>
+      <small *ngIf="loginFailed">Invalid Email/Username or Password</small>
+      <button id="login-btn" type="button" class="btn btn-outline-primary btn-block" (click)="login()" [disabled]="loginForm.form.invalid">Login</button>
     </form>
   </div>
 </ng-template>
@@ -61,15 +62,19 @@
   <div class="modal-body">
     <form #signupForm="ngForm">
       <label for="username">Username</label>
-      <input type="text" class="form-control" placeholder="Username (5 - 10 Characters)" name="username" [(ngModel)]="currentUser.username" autocomplete="off" required minlength="5" maxlength="10">
-      <!-- <small *ngIf="username.invalid && (username.dirty || username.touched)">Invalid Username</small> -->
+      <input type="text" class="form-control" placeholder="Username (5 - 10 Characters)" name="username" [(ngModel)]="currentUser.username" autocomplete="off" required>
+      <p><small *ngIf="invalidUsername">Username must be 5 - 10 long</small></p>
+      <p><small *ngIf="usernameNotUnique">Username already in use</small></p>
       <label for="Email">Email</label>
       <input type="text" class="form-control" placeholder="Email" name="email" [(ngModel)]="currentUser.email" autocomplete="off" required>
+      <p><small *ngIf="invalidEmail">Invalid Email</small></p>
+      <p><small *ngIf="emailNotUnique">Email already in use</small></p>
       <label for="password">Password</label>
-      <input type="password" class="form-control" placeholder="Password (8 - 16 Characters)" name="password" [(ngModel)]="currentUser.password" autocomplete="off" required minlength="8" maxlength="16">
+      <input type="password" class="form-control" placeholder="Password (8 - 16 Characters)" name="password" [(ngModel)]="currentUser.password" autocomplete="off" required>
+      <p><small *ngIf="invalidPassword">Password must be 8 - 16 long</small></p>
       <label for="confirmPassword">Confirm Password</label>
       <input type="password" class="form-control" placeholder="Re-enter Your Password" name="confirmPassword" [(ngModel)]="confirmPassword" autocomplete="off" required>
-      <!-- <small *ngIf="confirmPassword !== currentUser.password && (confirmPassword.dirty || confirmPassword.touched)">Password Does Not Match</small> -->
+      <p><small *ngIf="passwordNotMatch">Password does not match</small></p>
     </form>
   </div>
   <div class="modal-footer">
