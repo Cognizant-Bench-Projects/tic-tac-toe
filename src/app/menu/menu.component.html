@@ -6,9 +6,9 @@
     <br/>
     <button class="btn btn-info" (click)="openModal(loginModal)">Login</button>
     <br/>
-    <button class="btn btn-info" (click)="login()">Login With GitHub</button>
+    <button class="btn btn-info" (click)="githubLogin()">Login With GitHub</button>
     <br/>
-    <button class="btn btn-info" (click)="login()">Login With Google</button>
+    <button class="btn btn-info" (click)="googleLogin()">Login With Google</button>
   </div>
   <div *ngIf="authService.user && !gameState.gameStarted">
     <h1>Hello {{authService.user.username}}</h1>
@@ -42,12 +42,12 @@
 </div>
 
 <ng-template #loginModal let-modal>
-  <div class="modal-header">
-  </div>
   <div class="modal-body">
     <form #loginForm="ngForm">
-      <input type="text" class="form-control" placeholder="Email/Username" name="email/username" [(ngModel)]="currentInput" autocomplete="off" required>
+      <label for="email/username">Email/Username</label>
+      <input type="text" class="form-control" placeholder="Email or Username" name="email/username" [(ngModel)]="currentInput" autocomplete="off" required>
       <br/>
+      <label for="password">Password</label>
       <input type="password" class="form-control" placeholder="Password" name="password" [(ngModel)]="currentUser.password" autocomplete="off" required>
       <small *ngIf="loginFailed">Invalid Email/Username or Password</small>
       <button id="login-btn" type="button" class="btn btn-outline-primary btn-block" (click)="login()" [disabled]="loginForm.form.invalid">Login</button>

@@ -70,10 +70,7 @@ export class MenuComponent implements OnInit {
     this.invalidPassword = this.currentUser.password.length < 8 || this.currentUser.password.length > 16;
     this.passwordNotMatch = this.confirmPassword !== this.currentUser.password;
 
-    if (this.invalidUsername || this.invalidEmail || this.invalidPassword || this.passwordNotMatch) {
-      return false;
-    }
-    return true;
+    return !(this.invalidUsername || this.invalidEmail || this.invalidPassword || this.passwordNotMatch);
   }
 
   login() {
@@ -109,5 +106,17 @@ export class MenuComponent implements OnInit {
 
   closeModal() {
     this.modalService.dismissAll();
+  }
+
+  githubLogin() {
+    // const width = 500;
+    // const height = 600;
+    // const option = `width=${width}, height=${height}, left=${(window.screen.width / 2) - ((width / 2))}, top=${(window.screen.height / 2) - ((height / 2) + 10)}`;
+    // return window.open('http://localhost:8080/oauth2/authorize/github', 'GitHub', option);
+    window.location.href = 'http://localhost:8080/oauth2/authorize/github';
+  }
+
+  googleLogin() {
+
   }
 }

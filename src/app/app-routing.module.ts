@@ -1,10 +1,11 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
-import { MenuComponent } from './menu/menu.component';
-import { AppComponent } from './app.component';
+import { AuthComponent } from './auth/auth.component';
+import { MainComponent } from './main/main.component';
 
 const appRoutes: Routes = [
-  { path: 'play-tic-tac-toe', component: AppComponent},
+  { path: 'play-tic-tac-toe', component: MainComponent },
+  { path: 'auth', component: AuthComponent },
   { path: '**', redirectTo: 'play-tic-tac-toe' }
 ];
 

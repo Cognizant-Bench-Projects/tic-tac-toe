@@ -9,12 +9,16 @@ import { AppRoutingModule } from './app-routing.module';
 import { GameStateService } from './services/game-state.service';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthComponent } from './auth/auth.component';
+import { MainComponent } from './main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardComponent,
-    MenuComponent
+    MenuComponent,
+    AuthComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
