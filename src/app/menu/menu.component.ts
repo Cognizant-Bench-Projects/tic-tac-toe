@@ -109,14 +109,10 @@ export class MenuComponent implements OnInit {
   }
 
   githubLogin() {
-    // const width = 500;
-    // const height = 600;
-    // const option = `width=${width}, height=${height}, left=${(window.screen.width / 2) - ((width / 2))}, top=${(window.screen.height / 2) - ((height / 2) + 10)}`;
-    // return window.open('http://localhost:8080/oauth2/authorize/github', 'GitHub', option);
     window.location.href = 'http://localhost:8080/oauth2/authorize/github';
   }
 
   googleLogin() {
-
+    window.location.href = 'http://localhost:8080/oauth2/authorize/google';
   }
 }

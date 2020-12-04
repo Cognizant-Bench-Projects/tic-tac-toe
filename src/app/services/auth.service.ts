@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
-import { GithubUser } from '../model/githubUser';
+import { AuthUser } from '../model/authUser';
 import { User } from '../model/user';
 
 @Injectable({
@@ -52,11 +52,11 @@ export class AuthService {
     )
   }
 
-  setUser(user: GithubUser) {
+  setUser(user: AuthUser) {
     this.user = new User();
-    this.user.id = user.id;
-    this.user.username = user.login;
-    this.user.email = user.email;
+    this.user.id = user.id || null;
+    this.user.username = user.login ? user.name : user.given_name;
+    this.user.email = user.email || null;
   }
 
   logout() {

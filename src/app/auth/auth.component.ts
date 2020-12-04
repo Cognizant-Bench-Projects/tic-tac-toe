@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import jwt_decode from "jwt-decode";
 import { AuthService } from '../services/auth.service';
-import { GithubUser } from '../model/githubUser';
+import { AuthUser } from '../model/authUser';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,14 +20,15 @@ export class AuthComponent implements OnInit {
 
     if (token) {
       try {
-        let decodedJwt = new GithubUser();
+        let decodedJwt = new AuthUser();
         decodedJwt = jwt_decode(token);
-        localStorage.setItem("accessToken", token);
         this.authService.setUser(decodedJwt);
         this.router.navigate(['./play-tic-tac-toe']);
       } catch (error) {
         this.authenticationFailed = true;
       }
+    } else {
+      this.authenticationFailed = true;
     }
   }
 
