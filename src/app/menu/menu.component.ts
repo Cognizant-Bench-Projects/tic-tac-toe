@@ -23,7 +23,7 @@ export class MenuComponent implements OnInit {
   invalidPassword: boolean = false;
   passwordNotMatch: boolean = false;
 
-  constructor(private gameState: GameStateService, private authService: AuthService, private modalService: NgbModal) { }
+  constructor(public gameState: GameStateService, public authService: AuthService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.authService.closeModalEmitter().subscribe(() => {
@@ -55,6 +55,7 @@ export class MenuComponent implements OnInit {
       tie: 0,
       player2: 0
     };
+    this.gameState.lastStep = null;
     this.gameState.clean();
     this.gameState.showStartMsg();
   }

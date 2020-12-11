@@ -11,6 +11,7 @@ export class GameStateService {
   click: number = 9;
   gameOver: boolean = false;
   winnerRow: Array<number> = [];
+  lastStep: number;
 
   boardState: Array<number> = [0, 0, 0, 0, 0, 0, 0, 0, 0];
 
@@ -28,6 +29,7 @@ export class GameStateService {
   restart() {
     this.clean();
     this.showStartMsg();
+    this.lastStep = null;
     if (!this.currentPlayer && !this.isPVP) {
       setTimeout(() => {
         this.computerGo.emit();

@@ -15,7 +15,7 @@ export class AuthService {
 
   url: string = 'http://localhost:8080/users';
 
-  private user: User = null;
+  user: User = null;
 
   constructor(private http: HttpClient) { }
 

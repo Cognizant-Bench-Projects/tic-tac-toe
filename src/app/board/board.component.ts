@@ -16,7 +16,7 @@ export class BoardComponent implements OnInit {
   winner: number;
   showMsgModal: boolean = false;
 
-  constructor(private gameState: GameStateService, private gameLogic: GameLogicService, private AIService: AiService, private modal: NgbModal) { }
+  constructor(public gameState: GameStateService, private gameLogic: GameLogicService, private AIService: AiService, private modal: NgbModal) { }
 
   ngOnInit() {
     this.gameState.computerGoFirstEmitter().subscribe(() => {
@@ -36,6 +36,7 @@ export class BoardComponent implements OnInit {
       this.gameState.boardState[idx] = this.gameState.currentPlayer ? 1 : 2;
       this.gameState.currentPlayer = !this.gameState.currentPlayer;
       this.gameState.click--;
+      this.gameState.lastStep = idx;
       this.checkIfWin(idx);
 
       if (!this.gameState.isPVP && !this.gameState.gameOver) {
@@ -56,11 +57,13 @@ export class BoardComponent implements OnInit {
 
   gameFinished() {
     this.addScore(this.winner);
+    this.gameState.lastStep = null;
     this.gameState.gameOver = true;
     this.modal.open(this.modalContent, {size: 'lg', centered: true});
   }
 
   playAgain() {
+    this.gameState.lastStep = null;
     this.gameState.restart();
     this.modal.dismissAll();
   }
@@ -68,7 +71,7 @@ export class BoardComponent implements OnInit {
   computerTurn() {
     if (!this.gameState.currentPlayer) {
       this.gameState.click--;
-      let idx = this.AIService.nextStep(this.gameState.boardState);
+      let idx = this.AIService.nextStep(this.gameState.boardState, this.gameState.lastStep);
       this.gameState.boardState[idx] = 2;
       this.gameState.currentPlayer = true;
 
