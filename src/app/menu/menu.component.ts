@@ -3,6 +3,7 @@ import { User } from '../model/user';
 import { AuthService } from '../services/auth.service';
 import { GameStateService } from '../services/game-state.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AiService } from '../services/ai.service';
 
 @Component({
   selector: 'app-menu',
@@ -23,7 +24,7 @@ export class MenuComponent implements OnInit {
   invalidPassword: boolean = false;
   passwordNotMatch: boolean = false;
 
-  constructor(public gameState: GameStateService, public authService: AuthService, private modalService: NgbModal) { }
+  constructor(public gameState: GameStateService, public authService: AuthService, private AIService: AiService, private modalService: NgbModal) { }
 
   ngOnInit() {
     this.authService.closeModalEmitter().subscribe(() => {
@@ -49,12 +50,18 @@ export class MenuComponent implements OnInit {
     this.gameState.showStartMsg();
   }
 
+  restart() {
+    this.AIService.winPattern = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
+    this.gameState.restart();
+  }
+
   reset() {
     this.gameState.score = {
       player1: 0,
       tie: 0,
       player2: 0
     };
+    this.AIService.winPattern = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
     this.gameState.lastStep = null;
     this.gameState.clean();
     this.gameState.showStartMsg();

@@ -59,6 +59,7 @@ export class BoardComponent implements OnInit {
     this.addScore(this.winner);
     this.gameState.lastStep = null;
     this.gameState.gameOver = true;
+    this.AIService.winPattern = [[0,1,2], [3,4,5], [6,7,8], [0,3,6], [1,4,7], [2,5,8], [0,4,8], [2,4,6]];
     this.modal.open(this.modalContent, {size: 'lg', centered: true});
   }
 
@@ -71,7 +72,7 @@ export class BoardComponent implements OnInit {
   computerTurn() {
     if (!this.gameState.currentPlayer) {
       this.gameState.click--;
-      let idx = this.AIService.nextStep(this.gameState.boardState, this.gameState.lastStep);
+      let idx = this.AIService.nextStep(this.gameState.boardState, this.gameState.lastStep, this.gameState.click);
       this.gameState.boardState[idx] = 2;
       this.gameState.currentPlayer = true;
 
