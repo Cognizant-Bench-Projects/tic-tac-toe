@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  oauth2Uri: 'http://54.91.135.240:8080/'
+  oauth2Uri: 'http://54.226.77.9:8080/'
 };
 
 /*
