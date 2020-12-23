@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { AuthUser } from '../model/authUser';
 import { User } from '../model/user';
+import { environment } from '../../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class AuthService {
   @Output() emailNotUnique: EventEmitter<any> = new EventEmitter<any>();
   @Output() usernameNotUnique: EventEmitter<any> = new EventEmitter<any>();
 
-  url: string = 'http://localhost:8080/users';
+  url: string = `${environment.oauth2Uri}users`;
 
   user: User = null;
 

@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { GameStateService } from '../services/game-state.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AiService } from '../services/ai.service';
+import { environment } from '../../environments/environment'
 
 @Component({
   selector: 'app-menu',
@@ -117,10 +118,10 @@ export class MenuComponent implements OnInit {
   }
 
   githubLogin() {
-    window.location.href = 'http://localhost:8080/oauth2/authorize/github';
+    window.location.href = `${environment.oauth2Uri}oauth2/authorize/github`;
   }
 
   googleLogin() {
-    window.location.href = 'http://localhost:8080/oauth2/authorize/google';
+    window.location.href = `${environment.oauth2Uri}oauth2/authorize/google`;
   }
 }
