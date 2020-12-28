@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable, Output } from '@angular/core';
 import { AuthUser } from '../model/authUser';
 import { User } from '../model/user';
-import { environment } from '../../environments/environment'
+import { environment } from '../../environments/environment.prod'
 
 @Injectable({
   providedIn: 'root'

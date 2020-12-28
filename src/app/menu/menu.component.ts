@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { GameStateService } from '../services/game-state.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AiService } from '../services/ai.service';
-import { environment } from '../../environments/environment'
+import { environment } from '../../environments/environment.prod'
 
 @Component({
   selector: 'app-menu',
